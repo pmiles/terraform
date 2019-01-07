@@ -18,4 +18,21 @@ module "net" {
    vpc_id                           = "${module.vpc.vpc_id}"
    vpc_cidr                         = "${var.vpc_cidr}"
    aws_region                       = "${var.aws_region}"
+
+}
+
+# Create a single security group
+module "sg" {
+   source                           = "modules/sg"
+   vpc_id                           = "${module.vpc.vpc_id}"
+}
+
+resource "aws_instance" "web" {
+  ami           = "ami-abcdef123"
+  instance_type = "t2.micro"
+
+  vpc_security_group_ids = ["${module.sg.sg_id}"]
+  tags = {
+    Name = "web"
+  }
 }

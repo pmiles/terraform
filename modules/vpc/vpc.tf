@@ -11,10 +11,6 @@ resource "aws_vpc" "testenv" {
   }
 }
 
-resource "aws_default_security_group" "testenv-default" {
-  vpc_id = "${aws_vpc.testenv.id}"
-}
-
 resource "aws_default_route_table" "testenv-static" {
   default_route_table_id = "${aws_vpc.testenv.default_route_table_id}"
 
